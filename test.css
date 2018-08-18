@@ -1,5 +1,24 @@
 .button {
   background-color: #f90;
-  color: #fff; }
+  color: #fff;
+  border: 3px solid #f90; }
+
+.my1 {
+  border: 1px solid #f90; }
+
+.tt p {
+  color: #999; }
+.tt h3 {
+  color: red;
+  border-bottom: 1px solid #f90; }
+.tt a {
+  color: green;
+  font-weight: 600; }
+  .tt a:hover {
+    background-color: #8899ff;
+    color: #fff; }
+
+p button, p .button {
+  padding: .5em .7em; }
 
 /*# sourceMappingURL=test.css.map */

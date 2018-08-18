@@ -1,4 +1,27 @@
 $btnColor:#f90;
 $txtColor:#fff;
+$border1:1px solid $btnColor;
 
-.button{ background-color:$btnColor; color:$txtColor;}
+.button{ background-color:$btnColor; color:$txtColor; border:3px solid $btnColor;}
+.my1{ border:$border1;}
+
+.tt{
+  p{
+    color:#999;
+  }
+  h3{
+    color:red; border-bottom:1px solid $btnColor;
+  }
+  a{
+    color:green; font-weight:600;
+    &:hover{
+      background-color:#8899ff; color:#fff;
+    }
+  }
+}
+
+p{
+  button,.button{
+    padding:.5em .7em;
+  }
+}
