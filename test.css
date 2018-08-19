@@ -1,3 +1,6 @@
+.setBack {
+  background-color: #89f; }
+
 .button {
   background-color: #f90;
   color: #fff;
@@ -20,5 +23,9 @@
 
 p button, p .button {
   padding: .5em .7em; }
+
+.my2 {
+  border: 3px solid #f90;
+    border-right-width: 10px; }
 
 /*# sourceMappingURL=test.css.map */

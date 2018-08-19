@@ -1,6 +1,7 @@
 $btnColor:#f90;
 $txtColor:#fff;
 $border1:1px solid $btnColor;
+@import "local1";
 
 .button{ background-color:$btnColor; color:$txtColor; border:3px solid $btnColor;}
 .my1{ border:$border1;}
@@ -23,5 +24,11 @@ $border1:1px solid $btnColor;
 p{
   button,.button{
     padding:.5em .7em;
+  }
+}
+
+.my2{
+  border: 3px solid #f90 {
+    right-width: 10px;
   }
 }
