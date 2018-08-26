@@ -1,31 +1,30 @@
-.setBack {
-  background-color: #89f; }
+body {
+  font-size: 20px;
+  line-height: 150%; }
 
-.button {
-  background-color: #f90;
-  color: #fff;
-  border: 3px solid #f90; }
+.test {
+  font-size: 1.2em;
+  width: 400px;
+  padding: 0 10px;
+  border: 1px solid #eee; }
+  .test p {
+    margin: 10px auto;
+    background-color: #eed; }
+  .test p + p {
+    font-size: 1.5em; }
 
-.my1 {
-  border: 1px solid #f90; }
-
-.tt p {
-  color: #999; }
-.tt h3 {
-  color: red;
-  border-bottom: 1px solid #f90; }
-.tt a {
-  color: green;
-  font-weight: 600; }
-  .tt a:hover {
-    background-color: #8899ff;
-    color: #fff; }
-
-p button, p .button {
-  padding: .5em .7em; }
-
-.my2 {
-  border: 3px solid #f90;
-    border-right-width: 10px; }
+.imgshow {
+  width: 200px;
+  height: 200px;
+  border: 2px solid #f90; }
+  .imgshow p {
+    margin: 0;
+    padding: 0;
+    width: 80px;
+    height: 80px;
+    background: #ff3 url(456.jpg) no-repeat bottom right/60px 60px; }
+  .imgshow p + p {
+    background-color: green;
+    background-size: auto; }
 
 /*# sourceMappingURL=test.css.map */

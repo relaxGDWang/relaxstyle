@@ -1,34 +1,12 @@
-$btnColor:#f90;
-$txtColor:#fff;
-$border1:1px solid $btnColor;
-@import "local1";
-
-.button{ background-color:$btnColor; color:$txtColor; border:3px solid $btnColor;}
-.my1{ border:$border1;}
-
-.tt{
-  p{
-    color:#999;
-  }
-  h3{
-    color:red; border-bottom:1px solid $btnColor;
-  }
-  a{
-    color:green; font-weight:600;
-    &:hover{
-      background-color:#8899ff; color:#fff;
-    }
-  }
+body{ font-size:20px; line-height:150%;}
+.test{
+  font-size:1.2em; width:400px; padding:0 10px; border:1px solid #eee;
+  p{ margin:10px auto; background-color:#eed;}
+  p + p{ font-size:1.5em;}
 }
 
-p{
-  button,.button{
-    padding:.5em .7em;
-  }
-}
-
-.my2{
-  border: 3px solid #f90 {
-    right-width: 10px;
-  }
+.imgshow{
+  width:200px; height:200px; border:2px solid #f90;
+  p{ margin:0; padding:0; width:80px; height:80px; background:#ff3 url(456.jpg) no-repeat bottom right / 60px 60px;}
+  p + p{ background-color:green; background-size:auto;}
 }
