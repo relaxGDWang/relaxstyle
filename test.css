@@ -1,6 +1,7 @@
 body {
   font-size: 20px;
-  line-height: 150%; }
+  line-height: 150%;
+  background: url(456.jpg) no-repeat fixed right top; }
 
 .test {
   font-size: 1.2em;
@@ -42,12 +43,16 @@ body {
 .opshow {
   width: 200px;
   height: 200px;
-  background: url(456.jpg) left top/60px 60px;
   padding: 20px;
-  border: 20px dashed #f90; }
-  .opshow div {
-    width: 160px;
-    height: 160px;
-    background-color: #fff; }
+  background-clip: content-box;
+  background-color: green;
+  border: 20px dashed blue; }
+  .opshow p {
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    background-color: orange;
+    background-clip: inherit;
+    border: 10px dashed gray; }
 
 /*# sourceMappingURL=test.css.map */

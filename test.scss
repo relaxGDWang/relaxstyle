@@ -1,4 +1,4 @@
-body{ font-size:20px; line-height:150%;}
+body{ font-size:20px; line-height:150%; background:url(456.jpg) no-repeat fixed right top;}
 .test{
   font-size:1.2em; width:400px; padding:0 10px; border:1px solid #eee;
   p{ margin:10px auto; background-color:#eed;}
@@ -17,6 +17,6 @@ body{ font-size:20px; line-height:150%;}
 }
 
 .opshow{
-  width:200px; height:200px; background:url(456.jpg) left top / 60px 60px; padding:20px; border:20px dashed #f90;
-  div{ width:160px; height:160px; background-color:#fff;}
+  width:200px; height:200px; padding:20px; background-clip:content-box; background-color:green; border:20px dashed blue;
+  p{ width:100px; height:100px; padding:10px; background-color:orange; background-clip:inherit; border:10px dashed gray;}
 }
