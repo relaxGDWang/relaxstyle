@@ -27,4 +27,27 @@ body {
     background-color: green;
     background-size: auto; }
 
+.show {
+  width: 200px;
+  height: 200px;
+  background: url(456.jpg) no-repeat left top/60px 60px #45f;
+  padding: 0 10px;
+  border: 1px dashed #f90; }
+  .show span {
+    display: inline-block;
+    line-height: 128px;
+    background: inherit;
+    border: 1px solid; }
+
+.opshow {
+  width: 200px;
+  height: 200px;
+  background: url(456.jpg) left top/60px 60px;
+  padding: 20px;
+  border: 20px dashed #f90; }
+  .opshow div {
+    width: 160px;
+    height: 160px;
+    background-color: #fff; }
+
 /*# sourceMappingURL=test.css.map */
