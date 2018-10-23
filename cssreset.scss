@@ -1,0 +1,177 @@
+@charset "UTF-8";
+$contentColor: #333;   //全局字体色
+$inputHeight: 2.4em;   //控件高
+$inputLine: 1.4em;     //控件行高
+$borderNormal: 1px solid #999;  //某些控件的边框
+$borderRadius: 6px;    //圆角值
+//按钮颜色样式设置
+//colorB 边框色 colorT文本色 colorK 背景色
+@mixin rexButtonColor($colorB:#999,$colorT:'',$colorK:#ddd){
+  @if $colorB != '' {
+    border-color: $colorB;
+  }
+  @if $colorT != '' {
+    color: $colorT;
+  }
+  @if $colorK != '' {
+    background: $colorK;
+  }
+}
+//输入框样式设置
+//colorB 边框色 colorT文本色 colorK 背景色 colorS 内阴影色 colorU 外阴影色
+@mixin rexInputColor($colorB:#999,$colorT:'',$colorK:#fff,$colorS:transparent,$colorU:transparent){
+  @if $colorB != '' {
+    border-color: $colorB;
+  }
+  @if $colorT != '' {
+    color: $colorT;
+  }
+  @if $colorK != '' {
+    background: $colorK;
+  }
+  box-shadow:0 0 3px $colorS inset,0 0 2px $colorU;
+}
+
+*,*:after,*:before{ box-sizing:border-box;}
+html,body,h1,h2,h3,h4,h5,h6,dl,dt,dd,p,ul,li,form,iframe,object{ margin:0; padding:0;}
+a{ text-decoration:none; color:inherit; -webkit-tap-highlight-color:transparent;}
+input,textarea,select,button,option{ font-family:inherit; font-size:inherit; color:inherit;  -webkit-tap-highlight-color:transparent;}
+//去掉移动端firefox a标签的虚线框 PC chrome文本输入框的边框焦点时候的颜色
+a:active, a:focus, input:active, input:focus, button:active, button:focus{ outline:none;}
+//去掉移动端firefox 按钮获得焦点显示虚线框的样式
+input[type="button"]::-moz-focus-inner, input[type="submit"]::-moz-focus-inner, button::-moz-focus-inner{ border:none;}
+table { border-collapse:collapse; border-spacing:0; width:100%;}
+//在IE8下引起了iframe的空白BUG 但需要考虑根元素绝对定位的问题
+//如果html不加overflow:hidden 在某些移动端浏览器上会出现html可滚动的情况
+html,body{ font-size:14px; height:100%; width:100%; overflow:hidden; font-family:Arial,Helvetica,sans-serif; color:$contentColor;}
+//注意 某些版本的IE中（IE9）会导致iframe的内容定位错误，请参考是否去掉该属性，或者为iframe增加relative的属性
+iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
+//清除现代IE浏览器的输入框和密码框的默认交互按钮 主要用于设定自己的清空按钮和密码可见按钮时不冲突 */
+::-ms-clear, ::-ms-reveal{ display:none;}
+
+.rexInput,.rexSelect,.rexButton,.rexField input{ display:inline-block; height:$inputHeight; line-height:$inputLine; border:$borderNormal; outline:0; vertical-align:middle; border-radius:$borderRadius; padding:0 .5em;}
+.rexLabel{ display:inline-block; vertical-align:middle;}
+.rexSelect{ padding-right:.2em;}
+//按钮详细样式
+.rexButton {
+  cursor: pointer; user-select:none; -ms-user-select:none; -moz-user-select:none; -webkit-user-select:none;
+  @include rexButtonColor();
+  &:hover {
+    @include rexButtonColor(#ccc, '', #eee);
+  }
+  &:active {
+    @include rexButtonColor(#aaa, #fff, #aaa);
+  }
+  &.infor{
+    @include rexButtonColor(#2951d5, #fff, #2951d5);
+    &:hover{
+      @include rexButtonColor(#6888f1, #fff, #6888f1);
+    }
+    &:active{
+      @include rexButtonColor(#2951d5, #2951d5, #e2e9ff);
+    }
+  }
+  &.alert{
+    @include rexButtonColor(#ed3737, #fff, #ed3737);
+    &:hover{
+      @include rexButtonColor(#f28282, #fff, #f28282);
+    }
+    &:active{
+      @include rexButtonColor(#ed3737, #ed3737, #ffeeee);
+    }
+  }
+  &.warning{
+    @include rexButtonColor(#fe9500, #fff, #fe9500);
+    &:hover{
+      @include rexButtonColor(#ffbf63, #fff, #ffbf63);
+    }
+    &:active{
+      @include rexButtonColor(#fe9500, #fe9500, #fff4e5);
+    }
+  }
+  &.ok{
+    @include rexButtonColor(#1a9c00, #fff, #1a9c00);
+    &:hover{
+      @include rexButtonColor(#75db61, #fff, #75db61);
+    }
+    &:active{
+      @include rexButtonColor(#1a9c00, #1a9c00, #eaffe6);
+    }
+  }
+  //块按钮
+  &.block{ display:block; width:100%;}
+  //单独图标的按钮
+  &.fa{ min-width:$inputHeight;}
+  //图标文本按钮
+  &>.fa:before{ opacity:.7; margin:0 .3em;}
+  &:active>.fa:before{ opacity:1;}
+}
+//输入框详细样式
+.rexInput {
+  -webkit-appearance:none;
+  @include rexInputColor();
+  &:hover {
+    @include rexInputColor(#999, '', #efefef);
+  }
+  &:focus {
+    @include rexInputColor(#2951d5, '', #fff, rgba(0,0,0,.1),rgba(41,81,213,.5));
+  }
+  &.infor{
+    @include rexInputColor(#2951d5, #2951d5, #eef4ff);
+    &:hover {
+      @include rexInputColor('', '', #dae7ff);
+    }
+    &:focus {
+      @include rexInputColor(#2951d5, '', #fff, rgba(0,0,0,.1),rgba(41,81,213,.5));
+    }
+  }
+  &.alert{
+    @include rexInputColor(#ed3737, #ed3737, #fdeaea);
+    &:hover {
+      @include rexInputColor('', '', #f6d9d9);
+    }
+    &:focus {
+      @include rexInputColor(#ed3737, '', #fff, rgba(0,0,0,.1),rgba(273,55,55,.5));
+    }
+  }
+  &.warning{
+    @include rexInputColor(#fe9500, #fe9500, #fff3e2);
+    &:hover {
+      @include rexInputColor('', '', #fde8cb);
+    }
+    &:focus {
+      @include rexInputColor(#fe9500, '', #fff, rgba(0,0,0,.1),rgba(254,149,0,.5));
+    }
+  }
+  &.ok{
+    @include rexInputColor(#1a9c00, #1a9c00, #f2ffef);
+    &:hover {
+      @include rexInputColor('', '', #e0ffd9);
+    }
+    &:focus {
+      @include rexInputColor(#1a9c00, '', #fff, rgba(0,0,0,.1),rgba(26,156,0,.5));
+    }
+  }
+}
+//扩展输入框
+.rexField{
+  display:inline-block; vertical-align:middle; position:relative;
+  &.fa>input{ padding-left:$inputHeight; padding-right:.5em;}
+  //普通图标扩展
+  &.fa:before{ position:absolute; width:$inputHeight; text-align:center; line-height:0; top:50%; left:.1em; opacity:.7;}
+  &.right.fa>input{ padding-left:.5em; padding-right:$inputHeight;}
+  &.right.fa:before{ left:auto; right:.1em;}
+  //图标按钮扩展
+  &>span{ position:absolute; width:$inputHeight; padding:.1em 0; text-align:center; top:50%; transform:translateY(-50%); cursor:pointer; left:2px; border-right:$borderNormal; opacity:.7;}
+  &>input{ padding-right:$inputHeight+.8em; padding-left:.5em;}
+  &>span:hover{ opacity:1;}
+  &>span:active{ color:#2951d5;}
+  &>span+input{ padding-right:.5em; padding-left:$inputHeight+.8em;}
+  &>input+span{ left:auto; right:2px; border-right:0; border-left:$borderNormal;}
+  //按钮输入框联动
+  &.extend>input{ border-radius:$borderRadius 0 0 $borderRadius; border-right-width:0;}
+  &.extend>.rexButton{ border-radius:$borderRadius 0 0 $borderRadius;}
+  &.extend>.rexButton~input{ border-radius:0 $borderRadius $borderRadius 0; border-right-width:1px; border-left-width:0;}
+  &.extend>input~.rexButton{ border-radius:0 $borderRadius $borderRadius 0;}
+
+}
