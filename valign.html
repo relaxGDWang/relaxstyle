@@ -1,225 +1,226 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <title>测试元素的垂直对齐</title>
-    <link rel="stylesheet" href="cssreset.css?v=1"/>
-    <link rel="stylesheet" href="font-awesome.css"/>
-    <style type="text/css">
-        body {
-            overflow: auto;
-            border-bottom: 160px solid transparent;
-        }
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+  <title>测试元素的垂直对齐</title>
+  <link rel="stylesheet" href="cssreset.css?v=6"/>
+  <link rel="stylesheet" href="font-awesome.css?v=5"/>
+  <style type="text/css">
+    body {
+      overflow: auto;
+      border-bottom:60px solid transparent;
+    }
+    .test{ padding:20px;}
+    .tool {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      background-color: #eee;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+    }
 
-        .tt {
-            padding: 30px;
-            width: 600px;
-        }
+    .grid {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      display: none;
+      opacity: .3;
+      pointer-events: none;
+    }
 
-        .tool {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            left: 0;
-            background-color: #eee;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, .5);
-        }
+    .show .grid {
+      display: block;
+    }
 
-        .grid {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            display: none;
-            opacity: .3;
-            pointer-events: none;
-        }
+    .expshow {
+      padding: 20px;
+    }
 
-        .show .grid {
-            display: block;
-        }
+    /* --------- test ------------ */
+    .ttshow {
+      background: #f90;
+      line-height: 20px;
+    }
 
-        /* --------- test ------------ */
-        .ttshow {
-            background: #f90;
-            line-height: 20px;
-        }
+    .ttshow span {
+      background: red;
+      line-height: 20px;
+      font-size: 20px;
+    }
 
-        .ttshow span {
-            background: red;
-            line-height: 20px;
-            font-size: 20px;
-        }
-
-        .ttshow2 {
-            line-height: 30px;
-            background: green;
-            font-size: 40px;
-        }
-    </style>
+    .ttshow2 {
+      line-height: 30px;
+      background: green;
+      font-size: 40px;
+    }
+  </style>
 </head>
 <body ontouchstart="">
-<div class="tt">
-    xyX我们 <input type="text" value="xyX我们"/>
+<div class="test">
+  <div class="ttshow"><span>xyX我们</span></div>
 </div>
-<div class="ttshow"><span>xyX我们</span></div>
-<div style="padding:30px;">
-    <label for="aa" class="rexLabel">xyz我们</label>
-    <input id="aa" class="rexInput" type="text" value="xyz我们"/>
-    <button type="button" class="rexButton">xyz我们</button>
+<div class="test">
+  <label class="rexLabel">文本框和按钮xyz</label>
+  <input type="text" class="rexInput" value="xyz文本"/>
+  <button class="rexButton">按钮xyz</button>
+</div>
+<div class="test">
+  <label class="rexLabel">下拉框</label>
+  <select class="rexSelect" disabled="disabled">
+    <option>选项一</option>
+    <option>选项二</option>
+    <option>选项三</option>
+  </select>
+</div>
+<div class="test">
+  <label class="rexLabel">图标按钮</label>
+  <button class="rexButton fa fa-search"></button>
+  <button class="rexButton"><span class="fa fa-search"></span>搜索</button>
+  <button class="rexButton">搜索<span class="fa fa-search"></span></button>
+</div>
+<div class="test">
+  <label class="rexLabel">图标文本框xyz</label>
+  <span class="rexIconInput"><span class="fa fa-star"></span><input type="text" class="rexInput" value="xyz文本"/></span>
+  <button class="rexButton">按钮xyz</button>
+</div>
+<div class="test">
+  <label class="rexLabel">图标文本框xyz</label>
+  <span class="rexIconInput"><input type="text" class="rexInput" value="xyz文本"/><span class="fa fa-user"></span></span>
+  <button class="rexButton">按钮xyz</button>
+</div>
+<div class="test">
+  <label class="rexLabel">可点击图标文本框xyz</label>
+  <span class="rexIconInput button"><span class="fa fa-lock"></span><input type="text" class="rexInput" value="xyz文本"/></span>
+  <button class="rexButton">按钮xyz<span class="fa fa-list-alt"></span></button>
+</div>
+<div class="test">
+  <label class="rexLabel">可点击图标文本框xyz</label>
+  <span class="rexIconInput button"><input type="text" class="rexInput" value="xyz文本"/><span class="fa fa-lock"></span></span>
+  <button class="rexButton">按钮xyz<span class="fa fa-list-alt"></span></button>
+</div>
+<div class="test">
+  <label class="rexLabel">按钮组合组件</label>
+  <span class="rexCombine">
+    <button class="rexButton fa fa-font"></button>
+    <button class="rexButton fa fa-bold" color="infor"></button>
+    <button class="rexButton fa fa-italic" color="warning"></button>
+    <button class="rexButton fa fa-align-right" color="alert"></button>
+    <button class="rexButton fa fa-question-circle" color="ok"></button>
+  </span>
+</div>
+<div class="test">
+  <label class="rexLabel">输入框按钮组合</label>
+  <span class="rexCombine">
+    <button class="rexButton fa fa-camera"></button>
+    <input type="text" class="rexInput"/>
+    <button class="rexButton fa fa-camera"></button>
+  </span>
+</div>
+<div class="test">
+  <label class="rexLabel">带按钮的输入框及组合1</label>
+  <span class="rexCombine">
+    <span class="rexIconInput"><span class="fa fa-windows"></span><input type="text" class="rexInput"/></span>
+    <button class="rexButton fa fa-camera"></button>
+  </span>
+</div>
+<div class="test">
+  <label class="rexLabel">带按钮的输入框及组合2</label>
+  <span class="rexCombine">
+    <span class="rexIconInput button"><span class="fa fa-windows"></span><input type="text" class="rexInput"/></span>
+    <button class="rexButton fa fa-camera"></button>
+  </span>
+</div>
+<div class="test">
+  <label class="rexLabel">其他控件组合</label>
+  <span class="rexCombine">
     <select class="rexSelect">
-        <option>xyz我们</option>
+      <option>选项1</option>
+      <option>选项2</option>
+      <option>选项3</option>
     </select>
-</div>
-<div style="padding:30px; line-height:3em;">
-    <input type="text" class="rexInput" value="普通输入框"/>
-    <button class="rexButton">普通按钮</button>
-    <br/>
-    <input type="text" class="rexInput infor" value="信息提示"/>
-    <button class="rexButton infor">提示按钮</button>
-    <br/>
-    <input type="text" class="rexInput alert" value="输入错误"/>
-    <button class="rexButton alert">报警按钮</button>
-    <br/>
-    <input type="text" class="rexInput warning" value="输入警告"/>
-    <button class="rexButton warning">警告按钮</button>
-    <br/>
-    <input type="text" class="rexInput ok" value="输入成功"/>
-    <button class="rexButton ok">成功按钮</button>
-    <br/>
-</div>
-<div style="padding:30px;">
-    <button class="rexButton block">块级按钮</button>
-</div>
-<div style="padding:30px;">
-    <button class="rexButton fa fa-book"></button>
-    <button class="rexButton infor fa fa-camera"></button>
-    <button class="rexButton alert fa fa-picture-o"></button>
-    <button class="rexButton warning fa fa-italic"></button>
-    <button class="rexButton ok fa fa-times-circle-o"></button>
-</div>
-<div style="padding:30px;">
-    <button class="rexButton"><span class="fa fa-book"></span>图标按钮</button>
-    <button class="rexButton infor">图标按钮<span class="fa fa-camera"></span></button>
-    <button class="rexButton alert"><span class="fa fa-picture-o"></span>图标按钮</button>
-    <button class="rexButton warning">图标按钮<span class="fa fa-italic"></span></button>
-    <button class="rexButton ok"><span class="fa fa-times-circle-o"></span>图标按钮</button>
-</div>
-<div style="padding:10px;">
-    <button class="rexButton block"><span class="fa fa-info-circle"></span>块级按钮</button>
-</div>
-<div style="padding:10px;">
-    <button class="rexButton block infor">块级按钮<span class="fa fa-comments"></span></button>
-</div>
-<div style="padding:30px;">
-    <label id="bb" class="rexLabel">xyz我们</label>
-    <span class="rexField fa fa-camera"><input type="text" value="xyz我们"/></span>
-    <button class="rexButton">xyz我们 <span class="fa fa fa-italic"></span></button>
-</div>
-<div style="padding:30px;">
-    <label id="bb" class="rexLabel">xyz我们</label>
-    <span class="rexField right fa fa-camera"><input type="text" value="xyz我们"/></span>
-    <button class="rexButton">xyz我们 <span class="fa fa fa-italic"></span></button>
-</div>
-<div style="padding:30px;">
-    <label id="bb" class="rexLabel">xyz我们</label>
-    <span class="rexField"><span class="fa fa-camera"></span><input type="text" value="xyz我们"/></span>
-    <button class="rexButton">xyz我们 <span class="fa fa fa-italic"></span></button>
-</div>
-<div style="padding:30px;">
-    <label id="bb" class="rexLabel">xyz我们</label>
-    <span class="rexField"><input type="text" value="xyz我们"/><span class="fa fa-camera"></span></span>
-    <button class="rexButton">xyz我们 <span class="fa fa fa-italic"></span></button>
-</div>
-<div style="padding:30px;">
-    <label id="bb" class="rexLabel">xyz我们</label>
-    <span class="rexField extend fa fa-camera">
-        <input type="text" value="xyz我们"/><button class="rexButton">xyz我们</button>
-    </span>
-</div>
-<div style="padding:30px;">
-    <label id="bb" class="rexLabel">xyz我们</label>
-    <span class="rexField extend fa fa-camera">
-        <button class="rexButton">xyz我们</button><input type="text" value="xyz我们"/>
-    </span>
+    <span class="rexIconInput"><span class="fa fa-windows"></span><input type="text" class="rexInput"/></span>
+    <button class="rexButton fa fa-camera"></button>
+  </span>
 </div>
 
 <div id="grid" class="grid"></div>
 <div class="tool">
-    字体大小
-    <select id="changeSize">
-        <option value="12px">12px</option>
-        <option value="14px">14px</option>
-        <option value="18px">18px</option>
-        <option value="20px">20px</option>
-    </select>
-    &emsp;&emsp;&emsp;&emsp;
-    显示网格
-    <input id="showGrid" type="checkbox" value=""/>
-    &emsp;&emsp;&emsp;&emsp;
-    网格大小
-    <select id="changeGrid">
-        <option value="5px">5px</option>
-        <option value="10px">10px</option>
-        <option value="20px">20px</option>
-    </select>
+  字体大小
+  <select id="changeSize">
+    <option value="12px">12px</option>
+    <option value="14px">14px</option>
+    <option value="18px">18px</option>
+    <option value="20px">20px</option>
+  </select>
+  &emsp;&emsp;&emsp;&emsp;
+  显示网格
+  <input id="showGrid" type="checkbox" value=""/>
+  &emsp;&emsp;&emsp;&emsp;
+  网格大小
+  <select id="changeGrid">
+    <option value="5px">5px</option>
+    <option value="10px">10px</option>
+    <option value="20px">20px</option>
+  </select>
 </div>
 <script>
-    var general = {font: '20px', gflag: false, grid: '10px'};
-    var body = document.body;
-    var gridDom = document.querySelector('#grid');
-    var fcDom = document.querySelector('#changeSize');
-    var gsDom = document.querySelector('#showGrid');
-    var gcDom = document.querySelector('#changeGrid');
-    var gridBackgroundImage = 'linear-gradient(transparent $wd2$,red 0,red $wd$),linear-gradient(90deg,transparent $wd2$,red 0,red $wd$)';
-    var gridBackgroundSize = '$wd$ $wd$';
+  var general = {font: '14px', gflag: false, grid: '5px'};
+  var body = document.body;
+  var gridDom = document.querySelector('#grid');
+  var fcDom = document.querySelector('#changeSize');
+  var gsDom = document.querySelector('#showGrid');
+  var gcDom = document.querySelector('#changeGrid');
+  var gridBackgroundImage = 'linear-gradient(transparent $wd2$,red 0,red $wd$),linear-gradient(90deg,transparent $wd2$,red 0,red $wd$)';
+  var gridBackgroundSize = '$wd$ $wd$';
 
-    function init() {
-        fcDom.value = general.font;
-        gcDom.value = general.grid;
-        gsDom.checked = general.gflag;
+  function init() {
+    fcDom.value = general.font;
+    gcDom.value = general.grid;
+    gsDom.checked = general.gflag;
 
-        fcDom.addEventListener('change', function () {
-            general.font = this.value;
-            showFontsize();
-        });
+    fcDom.addEventListener('change', function () {
+      general.font = this.value;
+      showFontsize();
+    });
 
-        gsDom.addEventListener('change', function () {
-            general.gflag = this.checked;
-            showGrid();
-        });
+    gsDom.addEventListener('change', function () {
+      general.gflag = this.checked;
+      showGrid();
+    });
 
-        gcDom.addEventListener('change', function () {
-            general.grid = this.value;
-            showGrid();
-        });
+    gcDom.addEventListener('change', function () {
+      general.grid = this.value;
+      showGrid();
+    });
 
-        showFontsize();
-        showGrid();
+    showFontsize();
+    showGrid();
+  }
+
+  function showFontsize() {
+    body.style.fontSize = general.font;
+  }
+
+  function showGrid() {
+    general.gflag ? body.className = 'show' : body.className = '';
+    if (general.gflag) {
+      var limitDis = parseInt(general.grid) - 1;
+      var backImg = gridBackgroundImage.replace(/\$wd\$/g, general.grid).replace(/\$wd2\$/g, limitDis + 'px');
+      var backSize = gridBackgroundSize.replace(/\$wd\$/g, general.grid);
+      gridDom.style.backgroundImage = backImg;
+      gridDom.style.backgroundSize = backSize;
     }
+  }
 
-    function showFontsize() {
-        body.style.fontSize = general.font;
-    }
-
-    function showGrid() {
-        general.gflag ? body.className = 'show' : body.className = '';
-        if (general.gflag) {
-            var limitDis = parseInt(general.grid) - 1;
-            var backImg = gridBackgroundImage.replace(/\$wd\$/g, general.grid).replace(/\$wd2\$/g, limitDis + 'px');
-            var backSize = gridBackgroundSize.replace(/\$wd\$/g, general.grid);
-            gridDom.style.backgroundImage = backImg;
-            gridDom.style.backgroundSize = backSize;
-        }
-    }
-
-    init();
+  init();
 </script>
 </body>
 </html>

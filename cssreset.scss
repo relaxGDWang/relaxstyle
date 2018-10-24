@@ -31,6 +31,20 @@ $borderRadius: 6px;    //圆角值
   }
   box-shadow:0 0 3px $colorS inset,0 0 2px $colorU;
 }
+//绝对定位的元素垂直居中视觉协调
+@mixin vlMiddle1(){
+  position:absolute; top:50%; transform:translateY(-45%);
+}
+//绝对定位的元素垂直居中
+@mixin vlMiddle2(){
+  position:absolute; top:50%; transform:translateY(-50%);
+}
+@mixin disabledShow(){
+  cursor:not-allowed;
+  background-color:#d0d0d0;
+  border-color:#aaa;
+  color:#aaa;
+}
 
 *,*:after,*:before{ box-sizing:border-box;}
 html,body,h1,h2,h3,h4,h5,h6,dl,dt,dd,p,ul,li,form,iframe,object{ margin:0; padding:0;}
@@ -48,13 +62,20 @@ html,body{ font-size:14px; height:100%; width:100%; overflow:hidden; font-family
 iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
 //清除现代IE浏览器的输入框和密码框的默认交互按钮 主要用于设定自己的清空按钮和密码可见按钮时不冲突 */
 ::-ms-clear, ::-ms-reveal{ display:none;}
+//图标字体调整
+.fa:before{ opacity:.7; display:inline-block;  transform-origin:center; transform:scale(1.2,1.2);}
+.fa:active:before{ opacity:1;}
 
-.rexInput,.rexSelect,.rexButton,.rexField input{ display:inline-block; height:$inputHeight; line-height:$inputLine; border:$borderNormal; outline:0; vertical-align:middle; border-radius:$borderRadius; padding:0 .5em;}
+.rexInput,.rexSelect,.rexButton,.rexIconInput input{ display:inline-block; height:$inputHeight; line-height:$inputLine; border:$borderNormal; outline:0; vertical-align:middle; border-radius:$borderRadius; padding:0 .5em; margin:0; -webkit-appearance:none;}
 .rexLabel{ display:inline-block; vertical-align:middle;}
-.rexSelect{ padding-right:.2em;}
+.rexSelect{
+  padding-right:2em; background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><style type="text/css">.st0{fill:#999;}</style><polygon class="st0" points="10,7.5 2.2,-0.3 0,2 10,12 20,2 17.8,-0.3"/></svg>') no-repeat; background-size:.8em; background-position:right .5em bottom .6em;
+  &:hover{ background-color:#eee; background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><style type="text/css">.st0{fill:#333;}</style><polygon class="st0" points="10,7.5 2.2,-0.3 0,2 10,12 20,2 17.8,-0.3"/></svg>')}
+  &[disabled]{ @include disabledShow(); background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><style type="text/css">.st0{fill:#aaa;}</style><polygon class="st0" points="10,7.5 2.2,-0.3 0,2 10,12 20,2 17.8,-0.3"/></svg>')}
+}
 //按钮详细样式
 .rexButton {
-  cursor: pointer; user-select:none; -ms-user-select:none; -moz-user-select:none; -webkit-user-select:none;
+  cursor: pointer; user-select:none; -ms-user-select:none; -moz-user-select:none; -webkit-user-select:none; line-height:$inputLine+.2em;
   @include rexButtonColor();
   &:hover {
     @include rexButtonColor(#ccc, '', #eee);
@@ -62,7 +83,7 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
   &:active {
     @include rexButtonColor(#aaa, #fff, #aaa);
   }
-  &.infor{
+  &[color='infor']{
     @include rexButtonColor(#2951d5, #fff, #2951d5);
     &:hover{
       @include rexButtonColor(#6888f1, #fff, #6888f1);
@@ -71,7 +92,7 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
       @include rexButtonColor(#2951d5, #2951d5, #e2e9ff);
     }
   }
-  &.alert{
+  &[color='alert']{
     @include rexButtonColor(#ed3737, #fff, #ed3737);
     &:hover{
       @include rexButtonColor(#f28282, #fff, #f28282);
@@ -80,7 +101,7 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
       @include rexButtonColor(#ed3737, #ed3737, #ffeeee);
     }
   }
-  &.warning{
+  &[color='warning']{
     @include rexButtonColor(#fe9500, #fff, #fe9500);
     &:hover{
       @include rexButtonColor(#ffbf63, #fff, #ffbf63);
@@ -89,7 +110,7 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
       @include rexButtonColor(#fe9500, #fe9500, #fff4e5);
     }
   }
-  &.ok{
+  &[color='ok']{
     @include rexButtonColor(#1a9c00, #fff, #1a9c00);
     &:hover{
       @include rexButtonColor(#75db61, #fff, #75db61);
@@ -103,12 +124,13 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
   //单独图标的按钮
   &.fa{ min-width:$inputHeight;}
   //图标文本按钮
-  &>.fa:before{ opacity:.7; margin:0 .3em;}
+  &>.fa:before{ margin:0 .3em;}
   &:active>.fa:before{ opacity:1;}
+  //禁用的按钮
+  &[disabled],&[disabled]:hover{ @include disabledShow();}
 }
 //输入框详细样式
 .rexInput {
-  -webkit-appearance:none;
   @include rexInputColor();
   &:hover {
     @include rexInputColor(#999, '', #efefef);
@@ -116,7 +138,7 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
   &:focus {
     @include rexInputColor(#2951d5, '', #fff, rgba(0,0,0,.1),rgba(41,81,213,.5));
   }
-  &.infor{
+  &[color='infor']{
     @include rexInputColor(#2951d5, #2951d5, #eef4ff);
     &:hover {
       @include rexInputColor('', '', #dae7ff);
@@ -125,7 +147,7 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
       @include rexInputColor(#2951d5, '', #fff, rgba(0,0,0,.1),rgba(41,81,213,.5));
     }
   }
-  &.alert{
+  &[color='alert']{
     @include rexInputColor(#ed3737, #ed3737, #fdeaea);
     &:hover {
       @include rexInputColor('', '', #f6d9d9);
@@ -134,7 +156,7 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
       @include rexInputColor(#ed3737, '', #fff, rgba(0,0,0,.1),rgba(273,55,55,.5));
     }
   }
-  &.warning{
+  &[color='warning']{
     @include rexInputColor(#fe9500, #fe9500, #fff3e2);
     &:hover {
       @include rexInputColor('', '', #fde8cb);
@@ -143,7 +165,7 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
       @include rexInputColor(#fe9500, '', #fff, rgba(0,0,0,.1),rgba(254,149,0,.5));
     }
   }
-  &.ok{
+  &[color='ok']{
     @include rexInputColor(#1a9c00, #1a9c00, #f2ffef);
     &:hover {
       @include rexInputColor('', '', #e0ffd9);
@@ -152,26 +174,29 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
       @include rexInputColor(#1a9c00, '', #fff, rgba(0,0,0,.1),rgba(26,156,0,.5));
     }
   }
+  &[disabled],&[disabled]:hover{ @include disabledShow();}
 }
-//扩展输入框
-.rexField{
-  display:inline-block; vertical-align:middle; position:relative;
-  &.fa>input{ padding-left:$inputHeight; padding-right:.5em;}
-  //普通图标扩展
-  &.fa:before{ position:absolute; width:$inputHeight; text-align:center; line-height:0; top:50%; left:.1em; opacity:.7;}
-  &.right.fa>input{ padding-left:.5em; padding-right:$inputHeight;}
-  &.right.fa:before{ left:auto; right:.1em;}
-  //图标按钮扩展
-  &>span{ position:absolute; width:$inputHeight; padding:.1em 0; text-align:center; top:50%; transform:translateY(-50%); cursor:pointer; left:2px; border-right:$borderNormal; opacity:.7;}
-  &>input{ padding-right:$inputHeight+.8em; padding-left:.5em;}
-  &>span:hover{ opacity:1;}
-  &>span:active{ color:#2951d5;}
-  &>span+input{ padding-right:.5em; padding-left:$inputHeight+.8em;}
-  &>input+span{ left:auto; right:2px; border-right:0; border-left:$borderNormal;}
-  //按钮输入框联动
-  &.extend>input{ border-radius:$borderRadius 0 0 $borderRadius; border-right-width:0;}
-  &.extend>.rexButton{ border-radius:$borderRadius 0 0 $borderRadius;}
-  &.extend>.rexButton~input{ border-radius:0 $borderRadius $borderRadius 0; border-right-width:1px; border-left-width:0;}
-  &.extend>input~.rexButton{ border-radius:0 $borderRadius $borderRadius 0;}
-
+//带图标的输入框
+.rexIconInput{
+  display:inline-block; vertical-align:middle; position:relative; line-height:0; height:$inputHeight;
+  &>.fa{ min-width:$inputHeight; text-align:center; @include vlMiddle1(); line-height:$inputLine; left:0;}
+  &:hover>.fa:before{ opacity:1;}
+  &>input{ padding-right:$inputHeight;}
+  &>.fa+input{ padding-left:$inputHeight; padding-right:.5em;}
+  &>input+.fa{ left:auto; right:0;}
+  //可点击的图标
+  &.button>.fa{ cursor:pointer; -webkit-tap-highlight-color:transparent;}
+  &.button>.fa:after{ content:''; height:1.2em; border-right:$borderNormal; right:0; @include vlMiddle2();}
+  &.button>.fa:hover{ color:#2951d5;}
+  &.button>input{ padding-right:$inputHeight+.5em;}
+  &.button>.fa+input{ padding-left:$inputHeight+.5em; padding-right:.5em;}
+  &.button>input+.fa:after{ right:auto; left:0; border-left:$borderNormal; border-right:0;}
+}
+//组合输入框
+.rexCombine{
+  display:inline-block; vertical-align:middle; white-space:nowrap; line-height:$inputLine; font-size:0;
+  &>*{ font-size:14px;}
+  &>*, &>.rexIconInput>input{ border-radius:0; border-right-width:0;}
+  &>*:first-child, &>.rexIconInput:first-child>input{ border-radius:$borderRadius 0 0 $borderRadius;}
+  &>*:last-child, &>.rexIconInput:last-child>input{ border-radius:0 $borderRadius $borderRadius 0; border-right-width:1px;}
 }
