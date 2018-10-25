@@ -1,0 +1,6 @@
+@charset "UTF-8";
+$mytest: 2em;
+
+.test{ height:$mytest; paddint-left:$mytest / 2;}
+.test2{ height:$mytest - .2em;}
+.test3{ height:$mytest;}
