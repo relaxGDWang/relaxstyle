@@ -201,7 +201,16 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
   &>*:last-child, &>.rexIconInput:last-child>input{ border-radius:0 $borderRadius $borderRadius 0; border-right-width:1px;}
 }
 //单选复选按钮
+//目前的问题依然在和其他控件文本垂直居中对齐上产生的问题，目前通过设置外框固定高和行高，内部label的行高按需微调
 .rexCheck{
-  display:inline-block; vertical-align:middle; position:relative; line-height:$inputHeight; height:$inputHeight; background:#888; overflow:hidden;
-  input{ position:absolute; top:0; left:0; cursor:pointer;}
+  display:inline-block; vertical-align:middle; position:relative; line-height:0; height:$inputHeight;
+  input{
+    position:absolute; z-index:1; top:0; left:0; cursor:pointer; height:$inputHeight; width:$inputHeight; opacity:0;
+    &+label{ line-height:$inputHeight + .05em; padding-left:1.2em; vertical-align:middle; position:relative;}
+    &+label:before{ content:""; height:1em; width:1em; @include vlMiddle2(); left:0; background-repeat:no-repeat; background-size:contain;}
+    &[type="checkbox"]+label:before{ background-image:url(images/checkFalse.svg);}
+    &[type="checkbox"]:checked+label:before{ background-image:url(images/checkTrue.svg);}
+    &[type="radio"]+label:before{ background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><style type="text/css">.st0{fill:#FFFFFF;}.st1{fill:#231815;}</style><circle id="XMLID_1_" class="st0" cx="32" cy="32" r="30"/><path id="XMLID_6_" class="st1" d="M32,2C15.4,2,2,15.4,2,32s13.4,30,30,30s30-13.4,30-30S48.6,2,32,2z M32,58C17.6,58,6,46.4,6,32 C6,17.6,17.6,6,32,6s26,11.6,26,26C58,46.4,46.4,58,32,58z"/></svg>');}
+    &[type="radio"]:checked+label:before{ background-image:url(images/radioTrue.svg);}
+  }
 }
