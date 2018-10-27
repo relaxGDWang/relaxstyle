@@ -1,51 +1,6 @@
 @charset "UTF-8";
-$contentColor: #333;   //全局字体色
-$inputHeight: 2.4em;   //控件高
-$inputLine: 1.4em;     //控件行高
-$borderNormal: 1px solid #999;  //某些控件的边框
-$borderRadius: 6px;    //圆角值
-//按钮颜色样式设置
-//colorB 边框色 colorT文本色 colorK 背景色
-@mixin rexButtonColor($colorB:#999,$colorT:'',$colorK:#ddd){
-  @if $colorB != '' {
-    border-color: $colorB;
-  }
-  @if $colorT != '' {
-    color: $colorT;
-  }
-  @if $colorK != '' {
-    background: $colorK;
-  }
-}
-//输入框样式设置
-//colorB 边框色 colorT文本色 colorK 背景色 colorS 内阴影色 colorU 外阴影色
-@mixin rexInputColor($colorB:#999,$colorT:'',$colorK:#fff,$colorS:transparent,$colorU:transparent){
-  @if $colorB != '' {
-    border-color: $colorB;
-  }
-  @if $colorT != '' {
-    color: $colorT;
-  }
-  @if $colorK != '' {
-    background: $colorK;
-  }
-  box-shadow:0 0 3px $colorS inset,0 0 2px $colorU;
-}
-//绝对定位的元素垂直居中视觉协调
-@mixin vlMiddle1(){
-  position:absolute; top:50%; transform:translateY(-45%);
-}
-//绝对定位的元素垂直居中
-@mixin vlMiddle2(){
-  position:absolute; top:50%; transform:translateY(-50%);
-}
-@mixin disabledShow(){
-  cursor:not-allowed;
-  background-color:#d0d0d0;
-  border-color:#aaa;
-  color:#aaa;
-}
-
+@import 'config.scss';
+//css reset v2018-10-27
 *,*:after,*:before{ box-sizing:border-box;}
 html,body,h1,h2,h3,h4,h5,h6,dl,dt,dd,p,ul,li,form,iframe,object{ margin:0; padding:0;}
 a{ text-decoration:none; color:inherit; -webkit-tap-highlight-color:transparent;}
