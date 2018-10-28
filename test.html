@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>测试元素的垂直对齐</title>
     <style type="text/css">
-        .test{ padding:20px;}
-        .test>*{ display:inline-block; line-height:0; margin:0; padding:0; border:1px solid #ccc; -webkit-appearance:none; height:100px; background:#eee;  box-sizing: border-box; font-size:20px;}
+        .test{ padding:20px; font-size:14px;}
+        /*.test>*{ display:inline-block; line-height:0; margin:0; padding:0; border:1px solid #ccc; -webkit-appearance:none; height:100px; background:#eee;  box-sizing: border-box; font-size:20px;}*/
+				.test>span{ display:inline-block;}
+				.test input, .test button{ height:2.6em; line-height:1.2em; padding:0; margin:0; font-family:inherit; font-size:inherit; box-sizing:border-box; border-color:#f90;}
     </style>
 </head>
 <body>
     <div class="test">
         <span>测试xyz</span>
-        <input type="text" value="测试xyz"/>
+        <span class="itemPart"><input type="text" value="测试xyz"/></span>
         <button>测试xyz</button>
     </div>
 </body>
