@@ -7,15 +7,23 @@
     <title>测试元素的垂直对齐</title>
     <style type="text/css">
         .test{ padding:20px; font-size:14px;}
-        /*.test>*{ display:inline-block; line-height:0; margin:0; padding:0; border:1px solid #ccc; -webkit-appearance:none; height:100px; background:#eee;  box-sizing: border-box; font-size:20px;}*/
-				.test>span{ display:inline-block;}
-				.test input, .test button{ height:2.6em; line-height:1.2em; padding:0; margin:0; font-family:inherit; font-size:inherit; box-sizing:border-box; border-color:#f90;}
+		.test>.itemPart{ display:inline-block; height:2.6em;}
+		.test input, .test button{ line-height:2.6em; padding:0; margin:0; font-family:inherit; font-size:inherit; box-sizing:border-box; border-color:#f90;}
+
+        .test2{ padding:20px; font-size:14px;}
+        .test2>*{ display:inline-block; line-height:0; margin:0; padding:0; border:1px solid #ccc; -webkit-appearance:none; height:100px; background:#eee;  box-sizing: border-box; font-size:20px;}
     </style>
 </head>
 <body>
     <div class="test">
-        <span>测试xyz</span>
-        <span class="itemPart"><input type="text" value="测试xyz"/></span>
+        <span class="itemPart">测试xyz</span>
+        <input type="text" value="测试xyz"/>
+        <button>测试xyz</button>
+    </div>
+
+    <div class="test2">
+        <span class="itemPart">测试xyz</span>
+        <input type="text" value="测试xyz"/>
         <button>测试xyz</button>
     </div>
 </body>

@@ -169,3 +169,56 @@ iframe{ display:block; width:100%; height:100%; position:relative; border:0;}
     &[type="radio"]:checked+label:before{ background-image:url(images/radioTrue.svg);}
   }
 }
+
+/* ============ 对话框 ======================*/
+/* 对话框通用的标题栏和按钮栏样式 */
+.extDialog.none,.extMenu.none{ background-color:transparent;}
+.extDialog.white,.extMenu.white{ background-color:rgba(255,255,255,.7);}
+.dialog-title{
+  position:absolute; top:0; left:0; width:100%; height:3.2em; z-index:5; background-color:#e5e5e5; border-bottom:1px solid #ccc; white-space:nowrap;
+  .opBtn{
+    position:absolute; top:50%; line-height:0; z-index:10; cursor:pointer;
+    :active{ color:#f90;}
+    :before{ line-height:0;}
+  }
+  .left{ left:.5em;}
+  .right{ right:.5em;}
+  h4{ line-height:3.2em; text-align:center;}
+  h4.left{ text-align:left; padding-left:4em;}
+}
+.dialog-buttonBar{
+  position:absolute; bottom:0; left:0; width:100%; height:3.8em; z-index:5; background-color:#f0f0f0; border-top:1px solid #ccc; line-height:3.5em; text-align:center;
+}
+.dialog-title+.dialog-content{ border-top:3.2em solid transparent;}
+.dialog-buttonBar+.dialog-content{ border-bottom:3.8em solid transparent;}
+.dialog-title+.dialog-buttonBar+.dialog-content{ border-top:3.2em solid transparent; border-bottom:3.8em solid transparent;}
+/* 普通弹出框 */
+.extDialog{
+  $backColor: rgba(0,0,0,.6);
+  position:absolute; top:0; left:0; right:0; bottom:0; z-index:1000; text-align:center; white-space:nowrap; visibility:hidden; background-color:$backColor; font-size:0;
+  &:before{ content:""; display:inline-block; height:100%; width:0; font-size:0; overflow:hidden; vertical-align:middle;}
+  &.show{ visibility:visible;}
+  .dialogFrame{ display:inline-block; vertical-align:middle; width:100%; min-width:300px; max-width:650px; background-color:#fff; position:relative; border:1px solid #ccc; box-shadow:0 0 15px rgba(0,0,0,.6); border-radius:6px; overflow:hidden; font-size:14px;}  //目前垂直居中使用的是inline-block的垂直对齐方法
+  .dialog-content{ display:inline-block; width:100%; max-height:350px; overflow:auto; -webkit-overflow-scrolling:touch; white-space:normal;}
+}
+/* 自隐藏对话框 */
+.miniDialog{ position:fixed; left:0; z-index:1000; width:100%; text-align:center; padding:0 1em; opacity:0; visibility:hidden; transition-property:visibility,transform,opacity; transition-duration:.5s;}
+.miniDialog.top{ top:3%; transform:translateY(-300%);}
+.miniDialog.bottom{ bottom:3%; transform:translateY(300%);}
+.miniDialog .dialog-content{ display:inline-block; width:auto; box-shadow:0 0 15px rgba(0,0,0,0.6); word-break:break-all; border-radius:6px; background-color:#333; color:#fff; padding:.6em 1em;}
+.miniDialog.show.top,.miniDialog.show.bottom{ transform:none; opacity:1; visibility:visible;}
+/* 平移对话框 */
+.extMenu{ position:fixed; z-index:1000; top:0; bottom:0; left:0; right:0; visibility:hidden; opacity:0; transition-property:visibility,opacity; transition-duration:.45s; background-color:rgba(0,0,0,.6); overflow:hidden;}
+.extMenu .dialogFrame{ position:absolute; background-color:#fff; transition-property:transform; transition-duration:.45s;}
+.extMenu.left .dialogFrame{ top:0; left:0; bottom:0; width:75%; min-width:290px; transform:translateX(-110%);}
+.extMenu.right .dialogFrame{ top:0; right:0; bottom:0; width:75%; min-width:290px; transform:translateX(110%);}
+.extMenu.top .dialogFrame{ top:0; left:0; right:0; overflow:hidden; height:40%; min-height:290px; transform:translateY(-110%);}
+.extMenu.bottom .dialogFrame{ bottom:0; left:0; right:0; width:100%; overflow:hidden; height:40%; min-height:290px; transform:translateY(110%);}
+.extMenu .dialog-content{ display:block; width:100%; height:100%; overflow:auto;}
+.extMenu.show{ visibility:visible; opacity:1;}
+.extMenu.show .dialogFrame{ transform:none;}
+/* 模仿单页对话框 */
+.extPage{ position:fixed; top:0; right:0; bottom:0; left:0; z-index:1000; box-shadow:0 0 15px rgba(0,0,0,0.6); transition-property:transform; transition-duration:.45s; transform:translateX(110%); background-color:#fff;}
+.extPage.show{ transform:none;}
+.extPage .dialogFrame{ width:100%; height:100%;}
+.extPage .dialog-content{ display:block; width:100%; height:100%; overflow:auto;}
