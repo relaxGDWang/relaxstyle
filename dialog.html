@@ -9,8 +9,9 @@
   <link rel="stylesheet" href="font-awesome.css?v=5"/>
   <style type="text/css">
     .outFrame{ width:100%; height:100%; overflow:hidden;}
-    .myout{ width:100%; height:100%; overflow:auto;}
+    .myout{ width:100%; height:100%; overflow:auto; -webkit-overflow-scrolling:touch;}
     .test{ padding:20px; margin:20px; border:1px solid #0c8311;}
+    .test2{ padding:20px; margin:20px; border:1px solid red; background:#fff;}
   </style>
 </head>
 <body>
@@ -23,7 +24,7 @@
   <div class="myout" id="myout">
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
-    <div class="test">对话框样式调整</div>
+    <div class="test"><button id="btnOpen3">打开3</button></div>
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
@@ -31,40 +32,120 @@
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
+    <div class="test"><button id="btnOpen1">打开1</button>对话框样式调整</div>
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
-    <div class="test">对话框样式调整</div>
-    <div class="test"><button id="btnOpen">打开</button></div>
-    <div class="test">对话框样式调整</div>
+    <div class="test"><button id="btnOpen2">打开2</button></div>
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
+    <div class="test"><button id="btnOpen4">打开4</button></div>
     <div class="test">对话框样式调整</div>
     <div class="test">对话框样式调整</div>
   </div>
 
   <div class="extDialog" id="test">
     <div class="dialogFrame">
-      <div class="dialog-title">弹框标题</div>
-      <div class="dialog-buttonBar">底部按钮</div>
+      <div class="dialog-title"><span class="opBtn left fa fa-times btn-close">关闭</span><span class="opBtn right">打开</span><h4 class="left"><span class="fa fa-star-o diy"> 弹框标题</span></h4></div>
+      <div class="dialog-buttonBar">
+        这里是底部按钮
+        <button class="rexButton opBtn btn-close">我的</button>
+      </div>
       <div class="dialog-content">
         <p class="test2">我们南理工你</p>
         <p class="test2">我们南理工你</p>
         <p class="test2">我们南理工你</p>
         <p class="test2"><button id="btnClose">关闭</button></p>
         <p class="test2"><input type="text" value="abc"/></p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">this is a foot</p>
       </div>
     </div>
   </div>
+
+  <div class="miniDialog bottom" id="mini">
+    <div class="dialog-content diy">
+      这里是自隐藏弹框
+    </div>
+  </div>
+
+  <div class="extMenu left" id="hello">
+    <div class="dialogFrame">
+      <div class="dialog-title"><span class="opBtn left fa fa-times btn-close">关闭</span>hello</div>
+      <div class="dialog-buttonBar">
+        <button class="rexButton opBtn btn-close">关闭</button>
+      </div>
+      <div class="dialog-content">
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2"><button id="btnClose">关闭</button></p>
+        <p class="test2"><input type="text" value="abc"/></p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="extPage left" id="pppage">
+    <div class="dialogFrame">
+      <div class="dialog-title"><span class="opBtn left fa fa-times btn-close">关闭</span>hello</div>
+      <div class="dialog-buttonBar">
+        <button class="rexButton opBtn btn-close">关闭</button>
+      </div>
+      <div class="dialog-content">
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2"><button id="btnClose">关闭</button></p>
+        <p class="test2"><input type="text" value="abc"/></p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+        <p class="test2">我们南理工你</p>
+      </div>
+    </div>
+  </div>
+
 </div>
 <script src="jquery.min.js"></script>
 <script src="dialog1.3.1.js"></script>
+<script src="relax_function1.1.1.js"></script>
 <script>
 $(function(){
   var dialog=relaxDialog();
-  dialog.open('test');
+
+  $("#btnOpen1").click(function(){
+    dialog.open('test');
+  });
+
+  $("#btnOpen2").click(function(){
+    dialog.open('mini');
+  });
+
+  $("#btnOpen3").click(function(){
+    dialog.open('hello');
+  });
+
+  $("#btnOpen4").click(function(){
+    dialog.open('pppage');
+  });
 });
 </script>
 </body>

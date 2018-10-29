@@ -1,7 +1,7 @@
 //utf8 界面对话框
 /*
 author relax since 2016/8
-ver 1.3.1 2018/1/25
+ver 1.3.2 2018/10/29
 require jQuery,relax_function.js
 dom config
 	noclick="noclick" 用于设置mask层是否能响应点击关闭对话框
@@ -13,13 +13,13 @@ dom diy 用于标题部分，内容部分的替换
 
 function relaxDialog(){
   var searchClass = [".extDialog",".extMenu",".extPage",".miniDialog"];  //弹出框，移入式菜单，移入式页面，自隐对话框
-
   var list={};          //记录对话框对象
 	var pcFlag=true;      //判定客户端是移动端还是pc端
 	var ie8Flag=false;
-	var tempDom=document.createElement("div")
+	var tempDom=document.createElement("div");
 	if ("ontouchstart" in tempDom) pcFlag=false;
 	if (("addEventListener" in tempDom)===false) ie8Flag=true;
+	tempDom='';
 	var zIndexNum=0;      //记录当前css样式表中定义的zIndex
 	var zList=[];         //按各窗口打开的z序排列
 	var timeID;           //用于协调resize事件
@@ -35,6 +35,7 @@ list结构
 	content 对话框的 content dom
 	buttonbar 对话框的 按钮部分 dom
 	classname 对话框的原始className字符串
+	barshow 输入框获得焦点时是否显示dialog-title和dialog-buttonBar
 */
 	for (var i=0; i<searchClass.length; i++){
 		(function(index){
@@ -52,16 +53,33 @@ list结构
 					tempVar.content=$(tempDom).find(".dialog-content").eq(0);
 					tempVar.buttonbar=$(tempDom).find(".dialog-buttonBar").eq(0);
 					tempVar.classname=$(tempDom)[0].className;
+					if (tempVar.type!=='minidialog') tempVar.barshow=true;
 					//绑定屏蔽层事件
 					//@action 2018/1/25 对于现代浏览器，似乎不存在事件点透的概念，目前IE8测试下来会有此问题，所以暂不作无屏蔽层的弹出框的协调处理，等后期再做完善
 					if (tempVar.type==="dialog" || tempVar.type==="menu"){
-						tempVar.dom.click(function(e){
+						tempVar.dom.on('click',function(e){
 							if (e.target!==this) return;
 							if ($(this).attr("noclick")) return;
 							dialogClose(this.id,"close",null,true);
 							protectEvent(e);
 						});
 					}
+          if (pcFlag===false){
+            //屏蔽滚动穿透
+            //ACTION 2018-10-29 针对ios系统，目前对话框的dialog-title和dialog-buttonBar两个部分依然能响应手指滑动后触发全部刷下下拉或者底部层的滚动，目前暂不继续优化，后期再说
+            tempVar.dom.on('touchmove',function(e){
+              if (e.target===this) protectEvent(e);
+            });
+            //input输入框获得焦点后的高度协调
+            if (tempVar.type!=='minidialog'){
+              tempVar.dom.find('input').on('focus',function(){
+                tempVar.barshow=false;
+              }).on('blur',function(){
+                tempVar.dom.removeClass('hidden');
+                tempVar.barshow=true;
+              });
+            }
+          }
 				}
 			}
 		})(i);
@@ -73,17 +91,17 @@ list结构
 	}
 	//重置dialog的max-height
   _fitMaxheight();
-  
+
 	//绑定弹出框中窗口的按钮一般事件
 	for (x in list){
 		(function(JQobj){
 			//取消按钮事件
-			JQobj.find(".opBnt").on("click",function(e){
-				var typeStr=this.className.replace(/.*(bnt-sure|bnt-cancel|bnt-close).*/g,"$1");
+			JQobj.find(".opBtn").on("click",function(e){
+				var typeStr=this.className.replace(/.*(btn-sure|btn-cancel|btn-close).*/g,"$1");
 				if (typeStr===this.className){
 					typeStr="";
 				}else{
-          typeStr=typeStr.replace("bnt-","");
+          typeStr=typeStr.replace("btn-","");
 				}
 				if (typeStr==="") return;
         if ($(this).attr("href")){
@@ -96,7 +114,7 @@ list结构
 			});
 		})(list[x].dom);
 	}
-	
+
 	//resize事件绑定
 	$(window).resize(function(){
 		if (timeID) return;
@@ -104,9 +122,17 @@ list结构
       bH=$("body").height();
 			_fitMaxheight(true);
 			clearTimeout(timeID);
+			timeID="";
 		},300);
 	});
-	
+
+  if (pcFlag===false){
+    //禁止框架的滚动 add by relax 2018-10-29
+    $('.outFrame').on('touchmove',function(e){
+      if (e.target===this) protectEvent(e);
+    });
+  }
+
 //打开对话框
 //config 用于对话框展现时候的内容设置
 /*
@@ -125,11 +151,11 @@ list结构
 */
 	function dialogShow(idStr,config){
 		if (!(idStr in list)) return;
-		
+
 		//如果有对话框打开，当前对打开的对话框不做处理 modify by relax 2016/9/10 可能存在多个对话框同时显示的情况
 		var tempObj = list[idStr];
 		if (_isShow(tempObj)) return;
-      
+
 		//协调细节
 		if (config && typeof(config)==="object"){
 			//modify by relax 2017/3/22 对话框的className进行自定义扩展
@@ -138,7 +164,7 @@ list结构
 			}else{
 				tempObj.dom[0].className=tempObj.classname;
 			}
-			
+
 			//对话框标题重置
 			if (config.title) tempObj.title.find(".diy").html(config.title);
 			//对话框内容重置 修改为重置dialog-content部分中的.diy中的内容
@@ -148,7 +174,7 @@ list结构
 				if (config.close===true) tempObj.title.eq(0).find(".bnt-close").css("display","block");
         if (config.close===false) tempObj.title.eq(0).find(".bnt-close").css("display","none");
 			}
-			
+
 			//操作按钮协调
 			//modify by relax 2017/3/28
 			var itemArray = ["bnt-sure","bnt-cancel","bnt-close"];
@@ -173,7 +199,7 @@ list结构
 				classNameStr=classNameStr.replace(/(^|\s+)(left|right|top|bottom)(\s+|$)/,"$1"+config.op+"$3");
         tempObj.dom[0].className=classNameStr;
 			}
-			
+
 			//modify by relax2017/3/28  相关事件的绑定
 			if (config.openCallback && typeof(config.openCallback)==="function"){
 				tempObj.open=config.openCallback;
@@ -186,13 +212,13 @@ list结构
         tempObj.close = "";
       }
 		}
-		
+
 		_fitZindex(tempObj);  //协调窗口z序
 		_show(tempObj);       //显示窗口
-		
+
 		if (tempObj.open) tempObj.open(idStr,tempObj.type);  //执行打开事件
 	}
-  
+
 	//关闭对话框
 	/*
 	参数说明
@@ -209,9 +235,9 @@ list结构
 			}
 			return;
 		}
-		
+
 		if (!list[idStr] && _isShow(list[idStr])===false) return;
-		
+
 		//如果当前打开的对话框不是需要关闭的对话框，则不做处理
 		//modify by relax 如果有多个对话框打开，这里会有问题，目前先注销
 		//if (nowShow != idStr) return;
@@ -287,11 +313,19 @@ list结构
   }
 
   //用于协调dialog的max-height属性，主要用于初始加载或者窗口resize
+  //flag用于标记是处理已经打开的extDialog对话框还是全部extDialog
   function _fitMaxheight(flag){
 		if (flag){
       for (var i=0,len=zList.length; i<len; i++){
         if (list[zList[i]].type==="dialog"){
           list[zList[i]].content.css("maxHeight",parseInt(bH*mH));
+        }
+        if (pcFlag===false && list[zList[i]].type!=='minidialog' && list[zList[i]].barshow===false){
+          if (bH*mH<150){
+            list[zList[i]].dom.addClass('hidden');
+          }else{
+            list[zList[i]].dom.removeClass('hidden');
+          }
         }
       }
 		}else{
@@ -307,7 +341,7 @@ list结构
 	function _isShow(item){
 		return item.dom.hasClass("show");
 	}
-  
+
 	return {
 		open: dialogShow,
 		close: dialogClose

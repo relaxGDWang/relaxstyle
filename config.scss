@@ -1,9 +1,12 @@
 @charset "UTF-8";
-$contentColor: #333;   //全局字体色
+$fontColor: #333;   //全局字体色
+$fontSize: 14px;   //全局字体大小
+$fontFamily: Arial,Helvetica,sans-serif;   //全局字体
+$borderRadius: 6px;    //圆角值
+
 $inputHeight: 2.4em;   //控件高
 $inputLine: 1.4em;     //控件行高
 $borderNormal: 1px solid #999;  //某些控件的边框
-$borderRadius: 6px;    //圆角值
 //按钮颜色样式设置
 //colorB 边框色 colorT文本色 colorK 背景色
 @mixin rexButtonColor($colorB:#999,$colorT:'',$colorK:#ddd){
@@ -54,4 +57,12 @@ $borderRadius: 6px;    //圆角值
       timing-function: $function;
     }
   }
+}
+//不可选择
+@mixin selectDisabled(){
+  user-select:none; -ms-user-select:none; -moz-user-select:none; -webkit-user-select:none;
+}
+//可选择
+@mixin selectEnabled(){
+  user-select:text; -ms-user-select:text; -moz-user-select:text; -webkit-user-select:text;
 }

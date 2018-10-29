@@ -1,0 +1,7 @@
+         bt   ht   jqevent
+chrome   0    ok    ok 
+firefox  0    ok    ok
+edge     ok    0    ok
+ie11     0    ok    ok
+MI       ok   0     ok
+ipad     ok   0     ok
