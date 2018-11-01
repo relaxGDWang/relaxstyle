@@ -1,0 +1,5 @@
+$(".dialogShow")[0].addEventListener('touchmove', function(e) {
+        if (e.target.className==='dialogShow'){
+            e.preventDefault();
+        }
+    }, false);

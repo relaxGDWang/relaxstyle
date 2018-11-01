@@ -18,15 +18,24 @@
 		#fontList li b{ position:absolute; top:50%; left:5px; transform:translateY(-50%); border-radius:50%; background:#999; color:#fff; text-align:center; width:40px; line-height:30px; font-size:12px; font-weight:normal;}
 		
 		.toolBar{ position:fixed; z-index:100; top:0; left:0; right:0; line-height:50px; background:rgba(255,255,255,.9); box-shadow:0 0 20px rgba(0,0,0,.4); padding-left:20px;}
+		.toolBar input{ width:70px;}
 		.nowselect{ float:right; position:relative; margin-right:1em;}
 		.nowselect strong{ display:inline-block; width:240px; text-align:center; line-height:34px; border:1px solid #ccc; border-radius:6px; background:linear-gradient(transparent, #ccc); cursor:pointer;}
 		.nowselect:hover strong{ background:#333; border-color:#333; border-radius:6px 6px 0 0; color:#fff;}
 		.submenu{ font-size:12px; position:absolute; top:42px; left:0; list-style:none; background:#333; color:#fff; width:100%; border-radius:0 0 6px 6px; text-align:center; padding:2px; display:none; overflow:hidden;}
 		.submenu li{ float:left; width:50%; border-right:1px solid #333; line-height:3em; background:linear-gradient(rgba(255,255,255,.3), transparent); cursor:pointer; text-align:left; padding-left:10px; position:relative;}
+		.submenu li>span{ position:absolute; right:0; line-height:40px; width:40px; text-align:center; top:50%; transform:translateY(-50%) scale(.5,.5); transform-origin:50% 50%; background:red; border-radius:50%; font-size:16px;}
 		.submenu li:hover{ background:#2c67bf;}
 		.submenu li:nth-child(even){ border-right:0;}
-		.cutpage{ position:fixed; z-index:100; bottom:0; left:0; right:0; line-height:50px; background:rgba(44,103,191,.9); box-shadow:0 0 20px rgba(0,0,0,.4); text-align:center;}
 		.nowselect:hover .submenu{ display:block;}
+	.cutpage{ position:fixed; z-index:100; bottom:0; left:0; right:0; line-height:50px; background:rgba(44,103,191,.9); box-shadow:0 0 20px rgba(0,0,0,.4); text-align:center;}
+	.cutpage .rexIconInput .fa{ color:red;}
+	.cutpage .rexIconInput input{ width:65px;}
+	  .pageList{ display:inline-block; vertical-align:middle; line-height:0;}
+	  .pageList li{ display:inline-block; background:#eee; border:1px solid #333; line-height:2.4em; width:2.4em; border-radius:6px; cursor:pointer;}
+		.pageList li:hover{ background:#fff;}
+	.pageList li.more{ border:0; background:transparent; color:#fff; cursor:default;}
+	  .pageList li.sel{ background:red; border-color:red; color:#fff; cursor:default;}
   </style>
 </head>
 <body ontouchstart="">
@@ -44,20 +53,27 @@
 			</ul>
 		</div>
 	</div>
-	<div class="cutpage">s</div>
+	<div class="cutpage">
+		<button class="rexButton" act="first">&lt;&lt;</button>
+		<button class="rexButton" act="prev">&lt;</button>
+		<ul class="pageList"></ul>
+		<button class="rexButton" act="next">&gt;</button>
+		<button class="rexButton" act="last">&gt;&gt;</button>
+		<span class="rexIconInput"><input id="gopage" type="text" maxlength="3"/><span class="fa" id="pagecount"></span></span><button class="rexButton" id="submitpage">GO</button>
+	</div>
 	<ul id="fontList"></ul>
 </div>
 <script src="jquery.min.js"></script>
 <script>
 $(function(){
 	var fav=[36,38,47,60,62,92,123,125,126,131,137,139,140,153,155,163,165,169,172,174,176,177,189,215,216,425,433,706,707,708,709,814,815,860,861,865,916,920,927,931,934,936,937,945,946,952,960,968,969,991,1021,1022,1023,1126,1161,1254,1421,1422,2928,2953,2962,2969,3512,3559,3867,3868,4896,4967,4960,4962,4968,6671,6672,8240,8241,8251,8252,8272,8281,8362,8451,8544,8545,8546,8547,8548,8549,8550,8551,8552,8553,8554,8555,8853,8855,8856,8857,8858,8862,8984,9673,9744,9745,9775,9824,9825,9826,9827,9829,9830,9851,9872,9873,9885,9888];
-	var htmlStr='';
-	var startOP=53581;
-	var endOP=54580;
-	startOP=0;
-	endOP=fav.length-1;
+	var startOP,endOP; //仅用于自定义显示时候的页码记录
 	var objS1=$('#s1');
 	var objS2=$('#s2');
+	var cutpage={
+	  max:200, page:1, count:0
+	};
+	var nowKey='';
 	var menu={
 		base:{
 			name:'基本汉字',s:'4E00',e:'9FA5'
@@ -115,54 +131,146 @@ $(function(){
 		},
 		voicext:{
 			name:'注音扩展',s:'31A0',e:'31BA'
+		},
+		fav:{
+		    name:'个人收藏',s:0, e:(fav.length-1).toString(16)
 		}
 	};
 	
-	showFont(fav);
-	
-	(function(){
+	(function(){  //书写菜单
 		var htmlStr="";
 		for (var x in menu){
 			menu[x].s=parseInt(menu[x].s,16);
 			menu[x].e=parseInt(menu[x].e,16);
 			menu[x].c=menu[x].e-menu[x].s;
-			htmlStr+='<li>'+menu[x].name+'</li>';
+			var tempSign=menu[x].e-menu[x].s;
+			if (tempSign>10000){
+			    tempSign=parseInt(tempSign/10000)+'w';
+			}else if(tempSign>1000){
+			    tempSign=parseInt(tempSign/1000)+'k';
+			}
+			htmlStr+='<li key="'+ x +'"><span>'+tempSign+'</span>'+menu[x].name+'</li>';
 		}
 		$('.submenu').eq(0).html(htmlStr);
-		console.log(menu);
 	})();
-	
-	$('#make').click(function(){
+
+    $('#make').click(function(){   //自定义范围按钮事件
 		startOP=parseInt(objS1.val());
 		endOP=parseInt(objS2.val());
-		showFont();
+        pageFit(startOP,endOP);
 	});
-	
-	function showFont(obj){
-		if (obj){
-			objS1.val(obj[0]);
-			objS2.val(obj[obj.length-1]);
+
+	$('.submenu>li').click(function(){  //菜单选择事件
+	    var key=$(this).attr('key');
+        nowKey=key;
+        pageFit(menu[key].s,menu[key].e);
+	});
+	$('.pageList').click(function(e){  //分页页码按钮事件
+	    if (e.target.nodeName.toLowerCase()==='li' && e.target.className!=='more' && e.target.className!=='sel'){
+            pageGo(parseInt(e.target.innerText));
+		}
+	});
+	$('.cutpage .rexButton').click(function(){  //分页操作按钮事件
+	   if (cutpage.count===0) return;
+	   var act=$(this).attr('act')+'';
+	   switch(act){
+		   case 'undefined':
+		       var page=$('#gopage').val();
+		       if (!page) return;
+		       page=parseInt(page);
+		       pageGo(page);
+		       break;
+		   default:
+		       pageGo(act);
+	   }
+	});
+
+	function pageFit(s1,s2){
+	    var dis=s2-s1;
+	    cutpage.count=Math.ceil(dis/cutpage.max);
+	    cutpage.page=1;
+	    $('#pagecount').text('/'+cutpage.count);
+        $('#gopage').val(1);
+        fillPagenumber();
+	}
+	function pageGo(n){
+	    if (/\d+/.test(n)){
+	        if (n<1 || n>cutpage.count) return;
+	        cutpage.page=n;
 		}else{
-			objS1.val(startOP);
-			objS2.val(endOP);
-			obj=[];
-			for (var i=startOP; i<=endOP; i++){
-				obj[i]=i;
+	        switch(n){
+				case 'first':
+				    cutpage.page=1; break;
+				case 'prev':
+				    if (cutpage.page>1) cutpage.page--;
+				    break;
+				case 'next':
+				    if (cutpage.page<cutpage.count) cutpage.page++;
+				    break;
+				case 'last':
+				    cutpage.page=cutpage.count;
+			}
+		}
+        $('#gopage').val(cutpage.page);
+        fillPagenumber();
+	}
+
+	function fillPagenumber(){
+	    var showCount=5;
+	    var per=parseInt(showCount/2);
+	    var g1=cutpage.page-per;
+	    if (g1<1) g1=1;
+	    var g2=g1+showCount-1;
+	    if (g2>cutpage.count) g2=cutpage.count;
+	    var htmlStr='';
+	    for(var i=g1; i<=g2; i++){
+	        if (i===cutpage.page){
+                htmlStr+='<li class="sel">'+ i +'</li>';
+			}else{
+                htmlStr+='<li>'+ i +'</li>';
+			}
+		}
+		if (g1>1) htmlStr='<li class="more">...</li>'+htmlStr;
+		if (g2<cutpage.count) htmlStr+='<li class="more">...</li>';
+		$('.pageList').eq(0).html(htmlStr);
+
+		var s1,s2;
+		if (nowKey===''){
+		    s1=startOP+(cutpage.page-1)*cutpage.max;
+		    s2=s1+cutpage.max;
+		    if (s2>endOP) s2=endOP;
+		}else{
+		    s1=menu[nowKey].s+(cutpage.page-1)*cutpage.max;
+		    s2=s1+cutpage.max;
+		    if (s2>menu[nowKey].e) s2=menu[nowKey].e;
+		}
+        showFont(s1,s2);
+	}
+
+	function showFont(s1,s2){
+	    var showObj=[];
+	    if (nowKey==='fav'){
+	        showObj=fav;
+		}else{
+	        for (var i=s1; i<=s2; i++){
+	            showObj[i]=i;
 			}
 		}
 		var htmlStr='';
 		var templateStr='<li><b>{$y$}</b><strong>{$x$}</strong><span>{$z$}</span></li>';
 		var temp='';
-		for (var i=startOP; i<=endOP; i++){
-			var xv='&#'+obj[i]+';';
-			var yv=obj[i];
-			var zv=obj[i].toString(16);
+		for (var i=s1; i<=s2; i++){
+			var xv='&#'+showObj[i]+';';
+			var yv=showObj[i];
+			var zv=showObj[i].toString(16);
 			temp=templateStr.replace(/\{\$x\$\}/g,xv).replace(/\{\$y\$\}/g,yv).replace(/\{\$z\$\}/g,zv);
 			htmlStr+=temp;
 		}
 		$('#fontList').html(htmlStr);
 	}
 });
+
+console.log(encodeURIComponent('丁'));
 </script>
 </body>
 </html>
