@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="cssreset.css?v=6"/>
   <link rel="stylesheet" href="font-awesome.css?v=5"/>
   <style type="text/css">
-    .outFrame{ width:100%; height:100%; overflow:auto; position:relative;}
+    .outFrame{ width:100%; height:100%; overflow:auto; position:relative; padding-top:60px; padding-bottom:60px;}
 		#fontList{ font-size:20px;}
 		#fontList li{ display:inline-block; width:200px; line-height:40px; border:1px solid #ccc; margin:5px; text-align:center; position:relative;}
 		#fontList li:hover{ background:#fe3; color:#f90; border-color:#f90;}
@@ -16,14 +16,36 @@
 		#fontList li strong{ width:30%; padding-left:40px;}
 		#fontList li span{ width:50%;}
 		#fontList li b{ position:absolute; top:50%; left:5px; transform:translateY(-50%); border-radius:50%; background:#999; color:#fff; text-align:center; width:40px; line-height:30px; font-size:12px; font-weight:normal;}
-		.tt{ background:#f90; position:absolute; width:200px; height:100px;}
-		.tt:before{ content:'\a5';}
+		
+		.toolBar{ position:fixed; z-index:100; top:0; left:0; right:0; line-height:50px; background:rgba(255,255,255,.9); box-shadow:0 0 20px rgba(0,0,0,.4); padding-left:20px;}
+		.nowselect{ float:right; position:relative; margin-right:1em;}
+		.nowselect strong{ display:inline-block; width:240px; text-align:center; line-height:34px; border:1px solid #ccc; border-radius:6px; background:linear-gradient(transparent, #ccc); cursor:pointer;}
+		.nowselect:hover strong{ background:#333; border-color:#333; border-radius:6px 6px 0 0; color:#fff;}
+		.submenu{ font-size:12px; position:absolute; top:42px; left:0; list-style:none; background:#333; color:#fff; width:100%; border-radius:0 0 6px 6px; text-align:center; padding:2px; display:none; overflow:hidden;}
+		.submenu li{ float:left; width:50%; border-right:1px solid #333; line-height:3em; background:linear-gradient(rgba(255,255,255,.3), transparent); cursor:pointer; text-align:left; padding-left:10px; position:relative;}
+		.submenu li:hover{ background:#2c67bf;}
+		.submenu li:nth-child(even){ border-right:0;}
+		.cutpage{ position:fixed; z-index:100; bottom:0; left:0; right:0; line-height:50px; background:rgba(44,103,191,.9); box-shadow:0 0 20px rgba(0,0,0,.4); text-align:center;}
+		.nowselect:hover .submenu{ display:block;}
   </style>
 </head>
 <body ontouchstart="">
 <div id="app" class="outFrame">
+	<div class="toolBar">
+		<label class="rexLabel">开始数量</label>
+		<span><input type="text" value="" class="rexInput" id="s1"/></span>
+		<span>--</span>
+		<label class="rexLabel">结束</label>
+		<span><input type="text" value="" class="rexInput" id="s2"/></span>
+		<button class="rexButton" id="make">开始生成</button>
+		<div class="nowselect">
+			<strong>MENU</strong>
+			<ul class="submenu">
+			</ul>
+		</div>
+	</div>
+	<div class="cutpage">s</div>
 	<ul id="fontList"></ul>
-	<div class="tt"></div>
 </div>
 <script src="jquery.min.js"></script>
 <script>
@@ -34,16 +56,112 @@ $(function(){
 	var endOP=54580;
 	startOP=0;
 	endOP=fav.length-1;
-	var templateStr='<li><b>{$y$}</b><strong>{$x$}</strong><span>{$z$}</span></li>';
-	var temp='';
-	for (var i=startOP; i<=endOP; i++){
-		var xv='&#'+fav[i]+';';
-		var yv=fav[i];
-		var zv=fav[i].toString(16);
-		temp=templateStr.replace(/\{\$x\$\}/g,xv).replace(/\{\$y\$\}/g,yv).replace(/\{\$z\$\}/g,zv);
-		htmlStr+=temp;
+	var objS1=$('#s1');
+	var objS2=$('#s2');
+	var menu={
+		base:{
+			name:'基本汉字',s:'4E00',e:'9FA5'
+		},
+		basext:{
+			name:'基本汉字补充',s:'9FA6',e:'9FEF'
+		},
+		exta:{
+			name:'扩展A',s:'3400',e:'4DB5'
+		},
+		extb:{
+			name:'扩展B',s:'20000',e:'2A6D6'
+		},
+		extc:{
+			name:'扩展C',s:'2A700',e:'2B734'
+		},
+		extd:{
+			name:'扩展D',s:'2B740',e:'2B81D'
+		},
+		exte:{
+			name:'扩展E',s:'2B820',e:'2CEA1'
+		},
+		extf:{
+			name:'扩展F',s:'2CEB0',e:'2EBE0'
+		},
+		KANGXI:{
+			name:'康熙部首',s:'2F00',e:'2FD5'
+		},
+		part1:{
+			name:'部首扩展1',s:'2E80',e:'2EF3'
+		},
+		HAN:{
+			name:'兼容汉字',s:'F900',e:'FAD9'
+		},
+		HANext:{
+			name:'兼容扩展',s:'2F800',e:'2FA1D'
+		},
+		PUA:{
+			name:'PUA(GBK)部件',s:'E815',e:'E86F'
+		},
+		part2:{
+			name:'部件扩展2',s:'E400',e:'E5E8'
+		},
+		PUAPLUS:{
+			name:'PUA增补',s:'E600',e:'E6CF'
+		},
+		HANBH:{
+			name:'汉字笔画',s:'31C0',e:'31E3'
+		},
+		HANJG:{
+			name:'汉字结构',s:'2FF0',e:'2FFB'
+		},
+		HANZY:{
+			name:'汉语注音',s:'3105',e:'312F'
+		},
+		voicext:{
+			name:'注音扩展',s:'31A0',e:'31BA'
+		}
+	};
+	
+	showFont(fav);
+	
+	(function(){
+		var htmlStr="";
+		for (var x in menu){
+			menu[x].s=parseInt(menu[x].s,16);
+			menu[x].e=parseInt(menu[x].e,16);
+			menu[x].c=menu[x].e-menu[x].s;
+			htmlStr+='<li>'+menu[x].name+'</li>';
+		}
+		$('.submenu').eq(0).html(htmlStr);
+		console.log(menu);
+	})();
+	
+	$('#make').click(function(){
+		startOP=parseInt(objS1.val());
+		endOP=parseInt(objS2.val());
+		showFont();
+	});
+	
+	function showFont(obj){
+		if (obj){
+			objS1.val(obj[0]);
+			objS2.val(obj[obj.length-1]);
+		}else{
+			objS1.val(startOP);
+			objS2.val(endOP);
+			obj=[];
+			for (var i=startOP; i<=endOP; i++){
+				obj[i]=i;
+			}
+		}
+		var htmlStr='';
+		var templateStr='<li><b>{$y$}</b><strong>{$x$}</strong><span>{$z$}</span></li>';
+		var temp='';
+		for (var i=startOP; i<=endOP; i++){
+			var xv='&#'+obj[i]+';';
+			var yv=obj[i];
+			var zv=obj[i].toString(16);
+			temp=templateStr.replace(/\{\$x\$\}/g,xv).replace(/\{\$y\$\}/g,yv).replace(/\{\$z\$\}/g,zv);
+			htmlStr+=temp;
+		}
+		$('#fontList').html(htmlStr);
 	}
-	$('#fontList').html(htmlStr);
 });
 </script>
 </body>
