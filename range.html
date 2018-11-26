@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<title>js range对象测试</title>
+	<link rel="stylesheet" href="cssreset.css?v=6"/>
+	<link rel="stylesheet" href="font-awesome.css?v=5"/>
+<style type="text/css">
+@keyframes test{
+	0%{ background-color: white;}
+	50% { background-color: black;}
+	100% { background-color: white;}
+}
+.ani{ animation:test 1s infinite steps(1, start);}
+
+#abc{ display:inline-block; line-height:20px; position:relative;}
+#abc:after{ content:''; height:1.2em; width:1px; background:#333; position:absolute; right:0; top:50%; transform:translateY(-50%); animation:test 1s infinite steps(1, start);}
+</style>
+</head>
+<body ontouchstart="">
+	<p>这里是<strong>围殴点五零</strong>能力1 <input type="text" class="rexInput" id="txt1" value="111"/></p>
+	<p id="pp1">这里是围殴点五零能力2 <input id="txt" type="text" class="rexInput" value="222"/></p>
+	<p>这里是围殴点五零能力3 <input type="text" class="rexInput" value="333" readonly="readonly"/></p>
+	<p><button class="rexButton" id="test">选择</button></p>
+	<div id="abc">我的测试文本</div>
+<script src="http://172.16.1.86/wedotwork/library/js/jquery.min.js"></script>
+<script src="http://172.16.1.86/wedotwork/library/js/rexfunction.js"></script>
+<script>
+document.getElementById('test').onclick=function(){
+	var obj=document.getElementById('txt');
+	obj.select();
+	//obj.setSelectionRange(0,5);
+	//$(obj).focus();
+};
+/*
+$('input').on('mouseup',function(){
+	getTxt1CursorPosition();
+});
+
+$("#pp1").select(function(){
+	$("#txt").after(" Text marked!");
+});
+*/
+
+function getTxt1CursorPosition(){
+	var oTxt1 = document.getElementById("txt1");
+	var selectNow=window.getSelection();
+	console.log(selectNow);
+	/*
+	var rangeNow=selectNow.getRangeAt(0);
+	console.log(selectNow);
+	console.log(rangeNow);
+	*/
+}
+</script>
+</body>
+</html>
