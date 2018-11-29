@@ -6,59 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>测试元素的垂直对齐</title>
     <style type="text/css">
-		*,*:after,*:before{ box-sizing:border-box;}
-        .test{ padding:20px; font-size:14px;}
-		.test>.itemPart{ display:inline-block; height:2.6em;}
-		.test input, .test button{ line-height:2.6em; padding:0; margin:0; font-family:inherit; font-size:inherit; box-sizing:border-box; border-color:#f90;}
+		*{ box-sizing:border-box;}
+		a{ text-decoration:none;}
+		body{ font-size:16px; font-family:arial;}
+		input,button{ -webkit-appearance:none; padding:0; margin:0; font-size:inherit; font-family:inherit;}
 
-        .test2{ padding:20px; font-size:14px;}
+        .test2{ padding:20px; font-size:14px; height:240px;}
         .test2>*{ display:inline-block; line-height:0; margin:0; padding:0; border:1px solid #ccc; -webkit-appearance:none; height:100px; background:#eee;  box-sizing: border-box; font-size:20px;}
+		.test2.tt>*{ vertical-align:middle;}
+
 		
-		.test3{ font-size:14px;}
-		.test3>div{ display:inline-block;}
-		.test3 a{ display:inline-block; height:3em; border:1px solid #ccc; -webkit-appearance:none; background-color:#eee;}
-		.test3 input{ -webkit-appearance:none; border:1px solid #ccc; height:3em; font:inherit; padding:0; margin:0;}
-		.test3 button{ -webkit-appearance:none; border:1px solid #ccc; height:3em; font:inherit; padding:0; margin:0;}
+		.test6{ height:80px; margin-top:20px;}
+		.test6>*{ display:inline-block;}
+		.test6 a{ height:40px; line-height:38px; border:1px solid #ccc;}
+		.test6 input{ height:40px; border:1px solid #ccc;}
+		.test6 button{ height:40px; border:1px solid #ccc;}
 		
-		
-		.test4{ font-size:14px; margin-top:30px;}
-		.test4>div{ display:inline-block;}
-		.test4 input{ -webkit-appearance:none; border:1px solid #ccc; height:40px; font:inherit; padding:0; margin:0;}
-		.test4 button{ -webkit-appearance:none; border:1px solid #ccc; height:40px; font:inherit; padding:0; margin:0;}
-		.test4 .rexButton{ display:inline-block; border:1px solid #ccc; height:40px; line-height:38px;}
-		
-		.test5{ font-size:14px; margin-top:30px;}
-		.test5 .rexInput{ display:inline-block;}
-		.test5 .rexButton,.test5 .rexInput>input{ display:inline-block; height:40px; border:1px solid #ccc; -webkit-appearance:none; padding:0; margin:0; font-size:inherit; font-family:inherit;}
-		.test5 a.rexButton{ line-height:38px;}
     </style>
 </head>
 <body>
-    <div class="test">
-        <span class="itemPart">测试xyz</span>
-        <input type="text" value="测试xyz"/>
-        <button>测试xyz</button>
-    </div>
-
     <div class="test2">
         <span class="itemPart">测试xyz</span>
         <input type="text" value="测试xyz"/>
         <button>测试xyz</button>
     </div>
 	
-	<div class="test3">
-		<div><a href="#">测试xyz</a></div>
-		<div><input type="text" value="测试xyz"/></div>
-		<button><span>测试xyz</span></button>
+	<div class="test2 tt">
+        <span class="itemPart">测试xyz</span>
+        <input type="text" value="测试xyz"/>
+        <button>测试xyz</button>
     </div>
 	
-	<div class="test4">
-		<a href="#" class="rexButton">测试xyz</a>
-		<div><input type="text" value="测试xyz"/></div>
-		<button><span>测试xyz</span></button>
+	
+	<div class="test6">
+		<a href="#" class="rexButton"><span>测试xyz</span></a>
+		<div class="rexInput"><input type="text" value="测试xyz"/></div>
+		<button class="rexButton"><span>测试xyz</span></button>
     </div>
 	
-	<div class="test5">
+	<div class="test6">
 		<a href="#" class="rexButton"><span>测试xyz</span></a>
 		<div class="rexInput"><input type="text" value="测试xyz"/></div>
 		<button class="rexButton"><span>测试xyz</span></button>
